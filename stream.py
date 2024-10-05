@@ -1,9 +1,21 @@
 import streamlit as st
 from ml import *
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 USERNAME = os.environ['USERNAME']
 PASSWORD = os.environ['PASSWORD']
+
+
+if 'authenticated' not in st.session_state:
+        st.session_state['authenticated'] = False  # Initialize authentication status
+        
+if st.session_state['authenticated']:
+            st.set_page_config(page_title="LTC Venture Dashboard", layout="wide")
+else:
+        st.set_page_config(page_title="LTC Venture Dashboard", layout="centered")
 
 # Function to check credentials
 def check_credentials(username, password):
@@ -37,18 +49,13 @@ def handle_login():
 
     
 def main():
-    st.set_page_config(layout="wide")
     st.title('LTC Venture Dashboard')
-    
-    if 'authenticated' not in st.session_state:
-        st.session_state['authenticated'] = False  # Initialize authentication status
         
     if not st.session_state['authenticated']:
         if handle_login():
             st.rerun()  
     else:
         col1, col2 = st.columns([3, 1])
-                    
         with col2:
                 st.header("Upload your contract file")
                 # Create a file uploader in the second column
