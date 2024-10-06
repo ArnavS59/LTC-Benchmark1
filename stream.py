@@ -2,7 +2,7 @@ import streamlit as st
 from ml import *
 import os
 from dotenv import load_dotenv
-
+from pages.semantic_analysis import *
 load_dotenv()
 
 USERNAME = os.environ['USERNAME']
@@ -13,9 +13,9 @@ if 'authenticated' not in st.session_state:
         st.session_state['authenticated'] = False  # Initialize authentication status
         
 if st.session_state['authenticated']:
-            st.set_page_config(page_title="LTC Venture Dashboard", layout="wide")
+            st.set_page_config(page_title="LTC Venture Dashboard", layout="wide", initial_sidebar_state="collapsed")  # Collapse the sidebar initially)
 else:
-        st.set_page_config(page_title="LTC Venture Dashboard", layout="centered")
+        st.set_page_config(page_title="LTC Venture Dashboard", layout="centered",     initial_sidebar_state="collapsed")  # Collapse the sidebar initially
 
 # Function to check credentials
 def check_credentials(username, password):
@@ -42,19 +42,19 @@ def handle_login():
             if check_credentials(username, password):
                 st.session_state['authenticated'] = True
                 st.success("Login successful!")
-                return True
+                st.rerun()  
             else:
                 st.error("Invalid username or password.")
-    return False  # Unsuccessful login
+
 
     
 def main():
     st.title('LTC Venture Dashboard')
-        
+    
     if not st.session_state['authenticated']:
-        if handle_login():
-            st.rerun()  
+        handle_login()
     else:
+        
         col1, col2 = st.columns([3, 1])
         with col2:
                 st.header("Upload your contract file")
