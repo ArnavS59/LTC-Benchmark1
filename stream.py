@@ -2,7 +2,7 @@ import streamlit as st
 from ml import *
 import os
 from dotenv import load_dotenv
-from pages.semantic_analysis import *
+from pages.semantic import *
 load_dotenv()
 
 USERNAME = os.environ['USERNAME']
