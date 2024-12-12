@@ -20,15 +20,6 @@ else:
 # Function to check credentials
 def check_credentials(username, password):
     return username == USERNAME and password == PASSWORD
-
-def display(col1, clauses):
-    with col1:
-        st.header("Contract Clauses")
-        for idx, (clause, clause_type) in enumerate(clauses):
-            st.write(f"**Clause {idx + 1}:**")
-            st.write(clause)
-            st.write(f"**Type:** {clause_type}")
-            st.write("---")
             
             
 def handle_login():

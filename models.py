@@ -1,6 +1,7 @@
 
 from pydantic import BaseModel, Field
 from datetime import datetime
+from typing import Optional
 
 class Output(BaseModel):
     rent: str = Field(description="Give me the monthly rental as in the contract")
@@ -10,7 +11,7 @@ class Output(BaseModel):
 class Contract(BaseModel):
     title: str = Field(description="Title or name of the contract", max_length=255)
     content: str = Field(description="Text content of the contract, extracted via OCR")
-    date_uploaded: str = Field(default=str(datetime.now().isoformat()), description="Date the contract was uploaded")
+    date_uploaded: Optional[str] = Field(default=str(datetime.now().isoformat()), description="Date the contract was uploaded")
     
     extracted_fields: Output = Field(
         default=None, description="Additional fields extracted from the contract text using an LLM"

@@ -4,17 +4,16 @@ from datetime import datetime
 import os
 from pymongo import MongoClient
 from dotenv import load_dotenv
-from extraction import process_contracts
 
 load_dotenv()
-
+import streamlit as st
 
 def connect_to_db():
     MONGO_URI = os.getenv("MONGO_URI")
     mongodb_client = MongoClient(MONGO_URI,  tlsAllowInvalidCertificates=True)
-    print("clinet is", MONGO_URI, mongodb_client)
     col = mongodb_client["LTC_DB"]["Contracts"]
-    print("Connecting to", col)
+    # print(col)
+    st.write(col)
     return mongodb_client, col
 
 def close_mongodb_client(mongodb_client):
@@ -57,15 +56,13 @@ def fetch_contracts(query=None, projection=None):
         query = {}  # Default to fetching all documents
     
     try:
-        mongodb_client, contracts_collection=connect_to_db()
+        _, contracts_collection=connect_to_db()
         # Fetch documents based on query and projection
         results = contracts_collection.find(query, projection)
-        print(results)
-        close_mongodb_client(mongodb_client)
+        st.write(results)
+        # close_mongodb_client(mongodb_client)
         return list(results)
     except Exception as e:
         print(f"An error occurred while fetching contracts: {e}")
         return []
     
-    
-# print(process_contracts(fetch_contracts()))
