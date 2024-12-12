@@ -1,10 +1,10 @@
 import streamlit as st
-from ml import *
+from extraction import *
 import os
 from dotenv import load_dotenv
-from pages.semantic import *
 load_dotenv()
-
+from llm import call_llm
+from utils import *
 USERNAME = os.environ['USERNAME']
 PASSWORD = os.environ['PASSWORD']
 
@@ -56,23 +56,35 @@ def main():
     else:
         
         col1, col2 = st.columns([3, 1])
+        
+        with col1:
+            data=fetch_contracts()
+            df=process_contracts(data)
+            st.dataframe(df)
+            
         with col2:
                 st.header("Upload your contract file")
                 # Create a file uploader in the second column
                 uploaded_file = st.file_uploader("Choose a file")
                 
-                if uploaded_file:
+                
+                
+                # if uploaded_file:
                             # Extract text from the uploaded file
-                            contract_text = extract_text_from_file(uploaded_file)
+                            # contract_text = extract_text_from_file(uploaded_file)
                             
-                            if contract_text:
-                                # Run clause identification on the contract text
-                                clauses = identify_clauses(contract_text)
-                                
-                                # Display the extracted clauses in col1
-                                display(col1, clauses)
-                            else:
-                                st.error("Unsupported file type or error reading the file.")
+                            # if contract_text:
+                            #     with col1:
+                            #         output=call_llm(contract_text)
+                            #         st.write(output.rent, output.deposit)
+                            
+                            # with col1:
+                            #     data=fetch_contracts()
+                            #     df=process_contracts(data)
+                            #     st.dataframe(df)
+                                    
+                            # else:
+                                # st.error("Unsupported file type or error reading the file.")
 
         
         
