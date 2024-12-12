@@ -51,8 +51,8 @@ def main():
         with col1:
             data=fetch_contracts()
             st.write(data)
-            df=process_contracts(data)
-            st.write(df)
+            # df=process_contracts(data)
+            # st.write(df)
             # st.dataframe(df)
             
         with col2:
