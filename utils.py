@@ -69,8 +69,9 @@ def fetch_contracts(query=None, projection=None):
             raise ValueError("The 'contracts' collection is None.")
         
         results = contracts_collection.find(query, projection)
+        final=list(results)
         close_mongodb_client(mongodb_client)
-        return list(results)
+        return final
     except Exception as e:
         print(f"An error occurred while fetching contracts: {e}")
         return []
