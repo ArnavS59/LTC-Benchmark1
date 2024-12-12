@@ -9,16 +9,22 @@ load_dotenv()
 import streamlit as st
 
 def connect_to_db():
-    MONGO_URI = os.getenv("MONGO_URI")
-    mongodb_client = MongoClient(MONGO_URI,  tlsAllowInvalidCertificates=True)
-    col = mongodb_client["LTC_DB"]["Contracts"]
-    # print(col)
-    st.write(col)
-    return mongodb_client, col
+    try:
+        MONGO_URI = os.getenv("MONGO_URI")
+        mongodb_client = MongoClient(MONGO_URI,  tlsAllowInvalidCertificates=True)
+        col = mongodb_client["LTC_DB"]["Contracts"]
+        if col is None:
+            raise ValueError("MongoDB collection is not found.")
+        return mongodb_client, col
+    except Exception as e:
+        st.error(f"Error connecting to database: {e}")
+        raise
 
 def close_mongodb_client(mongodb_client):
-    mongodb_client.close()
-    print("[INFO] MongoDB client closed.")
+    try:
+        mongodb_client.close()
+    except Exception as e:
+        st.error(f"Error closing MongoDB connection: {e}")
 
 def upload_contract():
     contract_data = {
@@ -55,12 +61,15 @@ def fetch_contracts(query=None, projection=None):
     if query is None:
         query = {}  # Default to fetching all documents
     
+    mongodb_client, contracts_collection=connect_to_db()
+    
     try:
-        _, contracts_collection=connect_to_db()
         # Fetch documents based on query and projection
+        if contracts_collection is None:
+            raise ValueError("The 'contracts' collection is None.")
+        
         results = contracts_collection.find(query, projection)
-        st.write(results)
-        # close_mongodb_client(mongodb_client)
+        close_mongodb_client(mongodb_client)
         return list(results)
     except Exception as e:
         print(f"An error occurred while fetching contracts: {e}")
