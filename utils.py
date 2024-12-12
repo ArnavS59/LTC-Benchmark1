@@ -5,16 +5,17 @@ import os
 from pymongo import MongoClient
 from dotenv import load_dotenv
 from extraction import process_contracts
+
 load_dotenv()
-
-
 
 
 def connect_to_db():
     MONGO_URI = os.getenv("MONGO_URI")
     mongodb_client = MongoClient(MONGO_URI,  tlsAllowInvalidCertificates=True)
+    print("clinet is", MONGO_URI, mongodb_client)
     col = mongodb_client["LTC_DB"]["Contracts"]
-    return col
+    print("Connecting to", col)
+    return mongodb_client, col
 
 def close_mongodb_client(mongodb_client):
     mongodb_client.close()
@@ -32,15 +33,14 @@ def upload_contract():
         "deposit": "$500",
     }
     
-    contracts_collection=connect_to_db()
-    
+    mongodb_client, contracts_collection=connect_to_db()
     output_instance = Output(**extracted_fields)
     contract = Contract(**contract_data, extracted_fields=output_instance)
     
     mongo_data = contract.model_dump(by_alias=True)
     insert_result=contracts_collection.insert_one(mongo_data)
     print(f"Document inserted with _id: {insert_result.inserted_id}")
-    
+    close_mongodb_client(mongodb_client)
 
 def fetch_contracts(query=None, projection=None):
     """
@@ -57,9 +57,11 @@ def fetch_contracts(query=None, projection=None):
         query = {}  # Default to fetching all documents
     
     try:
-        contracts_collection=connect_to_db()
+        mongodb_client, contracts_collection=connect_to_db()
         # Fetch documents based on query and projection
         results = contracts_collection.find(query, projection)
+        print(results)
+        close_mongodb_client(mongodb_client)
         return list(results)
     except Exception as e:
         print(f"An error occurred while fetching contracts: {e}")
