@@ -58,3 +58,4 @@ urllib3==2.2.3
 pydantic
 openai
 pymongo==3.12.3
+pymongo[srv]
