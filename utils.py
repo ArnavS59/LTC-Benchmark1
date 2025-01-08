@@ -9,6 +9,7 @@ load_dotenv()
 import streamlit as st
 from bson import ObjectId
 import base64
+from streamlit_pdf_viewer import pdf_viewer
 
 def connect_to_db():
     try:
@@ -84,13 +85,10 @@ def fetch_contracts(query=None, projection=None):
 
 def display_contracts():
     
-    
         query = {"_id": ObjectId("677c4296255b21961adc33be")}
         projection={"pdf_data":1}
         doc=fetch_contracts(query,projection)
-        base64_pdf = base64.b64encode(doc[0]["pdf_data"]).decode("utf-8")
-        # Display the PDF in an iframe in Streamlit
-        pdf_display = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width="700" height="500"></iframe>'
+        pdf_data = doc[0]["pdf_data"]
         
         
         if st.button('Show PDF'):
@@ -102,5 +100,5 @@ def display_contracts():
             # Display the modal content inline (without overlaying Streamlit widgets)
             with st.expander("Contract PDF", expanded=True):
                 # Display the PDF inside the expander (similar to a modal)
-                st.markdown(pdf_display, unsafe_allow_html=True)
+                pdf_viewer(pdf_data)
 
