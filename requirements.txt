@@ -59,3 +59,4 @@ pydantic
 openai
 pymongo==3.12.3
 pymongo[srv]
+plotly
