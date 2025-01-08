@@ -4,9 +4,11 @@ from datetime import datetime
 import os
 from pymongo import MongoClient
 from dotenv import load_dotenv
-
+import bson
 load_dotenv()
 import streamlit as st
+from bson import ObjectId
+import base64
 
 def connect_to_db():
     try:
@@ -26,11 +28,12 @@ def close_mongodb_client(mongodb_client):
     except Exception as e:
         st.error(f"Error closing MongoDB connection: {e}")
 
-def upload_contract():
+def upload_contract(pdf_data):
     contract_data = {
-    "title": "Rental Agreement",
+    "title": "Rental Agreement3",
     "content": "This agreement is made between Tenant and Landlord...",
-    "date_uploaded": str(datetime.now().isoformat())
+    "date_uploaded": str(datetime.now().isoformat()), 
+    "pdf_data": bson.Binary(pdf_data)  # Store as BSON Binary
     }
     
     extracted_fields={
@@ -76,3 +79,28 @@ def fetch_contracts(query=None, projection=None):
         print(f"An error occurred while fetching contracts: {e}")
         return []
     
+    
+
+
+def display_contracts():
+    
+    
+        query = {"_id": ObjectId("677c4296255b21961adc33be")}
+        projection={"pdf_data":1}
+        doc=fetch_contracts(query,projection)
+        base64_pdf = base64.b64encode(doc[0]["pdf_data"]).decode("utf-8")
+        # Display the PDF in an iframe in Streamlit
+        pdf_display = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width="700" height="500"></iframe>'
+        
+        
+        if st.button('Show PDF'):
+            # Set the session state to display the modal
+            st.session_state.show_modal = not st.session_state.show_modal
+    
+    # Check if the modal should be displayed
+        if st.session_state.show_modal:
+            # Display the modal content inline (without overlaying Streamlit widgets)
+            with st.expander("Contract PDF", expanded=True):
+                # Display the PDF inside the expander (similar to a modal)
+                st.markdown(pdf_display, unsafe_allow_html=True)
+

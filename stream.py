@@ -7,7 +7,7 @@ from llm import call_llm
 from utils import *
 USERNAME = os.environ['USERNAME']
 PASSWORD = os.environ['PASSWORD']
-
+from widgets import *
 
 if 'authenticated' not in st.session_state:
         st.session_state['authenticated'] = False  # Initialize authentication status
@@ -42,6 +42,10 @@ def handle_login():
 def main():
     st.title('LTC Venture Dashboard')
     
+    if "show_modal" not in st.session_state:
+            st.session_state.show_modal = False
+    
+    
     if not st.session_state['authenticated']:
         handle_login()
     else:
@@ -51,7 +55,13 @@ def main():
         with col1:
             data=fetch_contracts()
             df=process_contracts(data)
+            display_expring(df)
             st.dataframe(df)
+            display_contracts()
+            
+            
+            
+            
             
         with col2:
                 st.header("Upload your contract file")
@@ -60,7 +70,9 @@ def main():
                 
                 
                 
-                # if uploaded_file:
+                if uploaded_file:
+                    pdf_data = uploaded_file.read()
+                    upload_contract(pdf_data)
                             # Extract text from the uploaded file
                             # contract_text = extract_text_from_file(uploaded_file)
                             

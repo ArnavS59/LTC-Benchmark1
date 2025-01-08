@@ -1,7 +1,6 @@
 from PyPDF2 import PdfReader  
 import docx
 import pandas as pd
-from bson import ObjectId
 
 def extract_text_from_file(uploaded_file):
 
@@ -30,7 +29,8 @@ def process_contracts(contracts: list):
             "_id": str(contract.get("_id", "")),  # Convert ObjectId to string
             "title": contract.get("title", ""),
             "content": contract.get("content", ""),
-            "date_uploaded": contract.get("date_uploaded", "")
+            "date_uploaded": contract.get("date_uploaded", ""),
+            "date_expiry": contract.get("date_expiry", "")
         }
         
         # Add dynamic extracted fields
