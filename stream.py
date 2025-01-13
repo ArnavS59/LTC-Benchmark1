@@ -42,10 +42,6 @@ def handle_login():
 def main():
     st.title('LTC Venture Dashboard')
     
-    # if "show_modal" not in st.session_state:
-    #         st.session_state.show_modal = False
-    
-    
     if not st.session_state['authenticated']:
         handle_login()
     else:
@@ -53,10 +49,10 @@ def main():
         col1, col2 = st.columns([3, 1])
         
         with col1:
-            # data=fetch_contracts()
-            # df=process_contracts(data)
-            # st.dataframe(df)
-            print("test")
+            data=fetch_contracts()
+            df=process_contracts(data)
+            st.dataframe(df)
+
             
             
         with col2:
@@ -68,7 +64,6 @@ def main():
                 
                 if uploaded_file:
                     upload_contract(uploaded_file)
-                    print("test")
                     # upload_contract_google(uploaded_file)
                     
                             # Extract text from the uploaded file

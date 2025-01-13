@@ -7,8 +7,6 @@ from dotenv import load_dotenv
 import bson
 load_dotenv()
 import streamlit as st
-from google.cloud import storage
-client = storage.Client()
 
 def connect_to_db():
     try:
