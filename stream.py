@@ -55,12 +55,7 @@ def main():
         with col1:
             data=fetch_contracts()
             df=process_contracts(data)
-            display_expring(df)
             st.dataframe(df)
-            display_contracts()
-            
-            
-            
             
             
         with col2:
@@ -71,8 +66,9 @@ def main():
                 
                 
                 if uploaded_file:
-                    pdf_data = uploaded_file.read()
-                    upload_contract(pdf_data)
+                    upload_contract(uploaded_file)
+                    # upload_contract_google(uploaded_file)
+                    
                             # Extract text from the uploaded file
                             # contract_text = extract_text_from_file(uploaded_file)
                             

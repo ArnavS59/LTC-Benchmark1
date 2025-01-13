@@ -7,9 +7,8 @@ from dotenv import load_dotenv
 import bson
 load_dotenv()
 import streamlit as st
-from bson import ObjectId
-import base64
-from streamlit_pdf_viewer import pdf_viewer
+from google.cloud import storage
+client = storage.Client()
 
 def connect_to_db():
     try:
@@ -29,17 +28,23 @@ def close_mongodb_client(mongodb_client):
     except Exception as e:
         st.error(f"Error closing MongoDB connection: {e}")
 
-def upload_contract(pdf_data):
+def upload_contract(uploaded_file):
+    pdf_data = uploaded_file.read()
     contract_data = {
-    "title": "Rental Agreement3",
+    "title": "Agreement00",
     "content": "This agreement is made between Tenant and Landlord...",
     "date_uploaded": str(datetime.now().isoformat()), 
-    "pdf_data": bson.Binary(pdf_data)  # Store as BSON Binary
+    "pdf_data": bson.Binary(pdf_data),  # Store as BSON Binary
+    "file_name": uploaded_file.name,
     }
     
     extracted_fields={
-        "rent": "$400",
-        "deposit": "$500",
+        "contract_value": 400,
+        "item_purchased": "Led lights",
+        "unit_price": 10,
+        "payment_terms": "testing 123213",
+        "penalties": "trest 12312",
+        "delivery_schedule": "test 12312",
     }
     
     mongodb_client, contracts_collection=connect_to_db()
@@ -83,22 +88,11 @@ def fetch_contracts(query=None, projection=None):
     
 
 
-def display_contracts():
-    
-        query = {"_id": ObjectId("677c4296255b21961adc33be")}
+def display_contracts(filename):
+        query = {"file_name": filename}
         projection={"pdf_data":1}
         doc=fetch_contracts(query,projection)
         pdf_data = doc[0]["pdf_data"]
-        
-        
-        if st.button('Show PDF'):
-            # Set the session state to display the modal
-            st.session_state.show_modal = not st.session_state.show_modal
-    
-    # Check if the modal should be displayed
-        if st.session_state.show_modal:
-            # Display the modal content inline (without overlaying Streamlit widgets)
-            with st.expander("Contract PDF", expanded=True):
-                # Display the PDF inside the expander (similar to a modal)
-                pdf_viewer(pdf_data)
+        return pdf_data
+
 

@@ -26,11 +26,12 @@ def process_contracts(contracts: list):
     for contract in contracts:
         # Start with fixed fields
         flat_contract = {
-            "_id": str(contract.get("_id", "")),  # Convert ObjectId to string
+            # "_id": str(contract.get("_id", "")),  # Convert ObjectId to string
             "title": contract.get("title", ""),
-            "content": contract.get("content", ""),
+            # "content": contract.get("content", ""),
             "date_uploaded": contract.get("date_uploaded", ""),
-            "date_expiry": contract.get("date_expiry", "")
+            "date_expiry": contract.get("date_expiry", ""),
+            "file_name": contract.get("file_name","")
         }
         
         # Add dynamic extracted fields

@@ -4,10 +4,14 @@ from datetime import datetime, timedelta
 from typing import Optional
 
 class Output(BaseModel):
-    rent: str = Field(description="Give me the monthly rental as in the contract")
-    deposit: str = Field(description="Security deposit amount, as specified in the contract. This could also be referred to as "
-        "a 'damage deposit' or 'initial deposit' depending on the text.")
-
+    contract_value: float = Field(description="Vlaue of the contract")
+    item_purchased: str = Field(description="Items purchased")
+    unit_price: float = Field(description="Items purchased")
+    payment_terms: str = Field(description="Payement terms")
+    penalties: str = Field(description="Penalties")
+    delivery_schedule : str = Field(description="Delivery schedule")
+    
+    
 class Contract(BaseModel):
     title: str = Field(description="Title or name of the contract", max_length=255)
     content: str = Field(description="Text content of the contract, extracted via OCR")
@@ -17,16 +21,4 @@ class Contract(BaseModel):
         default=None, description="Additional fields extracted from the contract text using an LLM"
     )
     pdf_data: Optional[bytes] = Field(default=None, description="Data of pdf")
-
-    class Config:
-        json_schema_extra = {
-            "example": {
-                "title": "Service Agreement",
-                "content": "This agreement is made between Party A and Party B...",
-                "date_uploaded": "2023-12-10T12:34:56",
-                "extracted_fields": {
-                    "rent": "1500 USD",
-                    "deposit": "3000 USD"
-                }
-            }
-        }
+    file_name: str = Field(default=None, description="File name of the contract")
