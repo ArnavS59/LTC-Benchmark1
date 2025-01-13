@@ -1,5 +1,5 @@
 import streamlit as st
-from extraction import *
+from extraction import process_contracts, extract_text_from_file
 import os
 from dotenv import load_dotenv
 load_dotenv()
