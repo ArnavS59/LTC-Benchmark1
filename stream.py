@@ -49,10 +49,10 @@ def main():
         col1, col2 = st.columns([3, 1])
         
         with col1:
-            # data=fetch_contracts()
-            # df=process_contracts(data)
-            # st.dataframe(df)
-            print("s")
+            data=fetch_contracts()
+            df=process_contracts(data)
+            st.dataframe(df)
+
 
             
             
