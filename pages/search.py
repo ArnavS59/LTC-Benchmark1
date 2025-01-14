@@ -86,7 +86,7 @@ def help_page():
     if not st.session_state['authenticated']:
         st.warning("Please log in to access this page.")
     else:
-        st.title("Intelligent Search 🔍")
+        st.title("Intelligent Search")
         col1, col2 = st.columns(2)
         
         query_filter = {}

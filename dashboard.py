@@ -40,43 +40,42 @@ def handle_login():
 
     
 def main():
-    st.title('LTC Venture Dashboard 💡')
+    st.title('LTC Venture Dashboard')
     
     if not st.session_state['authenticated']:
         handle_login()
     else:
         
-        col1, col2 = st.columns([3, 1])
+        # col1 = st.columns(1)
         
-        with col1:
-            data=fetch_contracts()
-            df=process_contracts(data)
+        # with col1:
+            # data=fetch_contracts()
+            # df=process_contracts(data)
 
-            col44, col45=st.columns(2)
-            with col44:
-                st.metric("Total Revenue", "9 mph", border=True)
-                plot_revenue_graph(df)
+        col44, col45=st.columns(2)
+        with col44:
+                st.metric("Total Revenue", "€600k", border=True)
+                plot_revenue_graph()
                 plot_pie_chart()
                 
-            with col45:
-                st.metric("Total Sales", "9 Sales", border=True)
+        with col45:
+                st.metric("Contracts Signed this month", "12", border=True, delta="18")
                 plot_value_distribution()
                 plot_treemap()
-            
-            st.dataframe(df)
 
 
+
             
             
-        with col2:
-                st.header("Upload your contract file")
-                # Create a file uploader in the second column
-                uploaded_file = st.file_uploader("Choose a file")
+        # with col2:
+        #         st.header("Upload your contract file")
+        #         # Create a file uploader in the second column
+        #         uploaded_file = st.file_uploader("Choose a file")
                 
                 
                 
-                if uploaded_file:
-                    upload_contract(uploaded_file)
+        #         if uploaded_file:
+        #             upload_contract(uploaded_file)
                     # upload_contract_google(uploaded_file)
                     
                             # Extract text from the uploaded file

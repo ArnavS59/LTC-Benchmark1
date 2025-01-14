@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 import bson
 load_dotenv()
 import streamlit as st
-
+from extraction import extract_text_from_file
 def connect_to_db():
     try:
         MONGO_URI = os.getenv("MONGO_URI")
@@ -29,20 +29,20 @@ def close_mongodb_client(mongodb_client):
 def upload_contract(uploaded_file):
     pdf_data = uploaded_file.read()
     contract_data = {
-    "title": "Agreement00",
-    "content": "This agreement is made between Tenant and Landlord...",
+    "title": "Agreement04",
+    "content": extract_text_from_file(uploaded_file),
     "date_uploaded": str(datetime.now().isoformat()), 
     "pdf_data": bson.Binary(pdf_data),  # Store as BSON Binary
     "file_name": uploaded_file.name,
     }
     
     extracted_fields={
-        "contract_value": 1000,
-        "item_purchased": "Bürostühle",
-        "unit_price": 70,
-        "payment_terms": "testing 123213",
-        "penalties": "trest 12312",
-        "delivery_schedule": "test 12312",
+        "contract_value": 200,
+        "item_purchased": "Tische",
+        "unit_price": 60,
+        "payment_terms": "Test",
+        "penalties": "test",
+        "delivery_schedule": "Monthly",
     }
     
     mongodb_client, contracts_collection=connect_to_db()

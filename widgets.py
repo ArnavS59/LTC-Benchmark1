@@ -6,7 +6,7 @@ import plotly.express as px
 
 
 
-def plot_revenue_graph(df):
+def plot_revenue_graph():
     data = {
     "Month": ["January", "February", "March", "April", "May", "June"],
     "Sales": [200, 300, 400, 350, 500, 600],
