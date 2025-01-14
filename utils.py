@@ -37,9 +37,9 @@ def upload_contract(uploaded_file):
     }
     
     extracted_fields={
-        "contract_value": 400,
-        "item_purchased": "Led lights",
-        "unit_price": 10,
+        "contract_value": 1000,
+        "item_purchased": "Bürostühle",
+        "unit_price": 70,
         "payment_terms": "testing 123213",
         "penalties": "trest 12312",
         "delivery_schedule": "test 12312",
@@ -53,6 +53,7 @@ def upload_contract(uploaded_file):
     insert_result=contracts_collection.insert_one(mongo_data)
     print(f"Document inserted with _id: {insert_result.inserted_id}")
     close_mongodb_client(mongodb_client)
+    st.cache_data.clear()
 
 @st.cache_data
 def fetch_contracts(query=None, projection=None):
