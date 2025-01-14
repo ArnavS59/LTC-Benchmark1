@@ -40,7 +40,7 @@ def handle_login():
 
     
 def main():
-    st.title('LTC Venture Dashboard')
+    st.title('LTC Venture Dashboard 💡')
     
     if not st.session_state['authenticated']:
         handle_login()

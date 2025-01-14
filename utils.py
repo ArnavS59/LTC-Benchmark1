@@ -54,6 +54,7 @@ def upload_contract(uploaded_file):
     print(f"Document inserted with _id: {insert_result.inserted_id}")
     close_mongodb_client(mongodb_client)
 
+@st.cache_data
 def fetch_contracts(query=None, projection=None):
     """
     Fetch contracts from the MongoDB collection.

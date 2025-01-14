@@ -41,7 +41,7 @@ def help_page():
     if not st.session_state['authenticated']:
         st.warning("Please log in to access this page.")
     else:
-        st.title("Alerts")
+        st.title("Alerts 🚨")
         data=fetch_contracts()
         df=process_contracts(data)
         display_expring(df)        
