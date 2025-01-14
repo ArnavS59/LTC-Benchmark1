@@ -51,6 +51,18 @@ def main():
         with col1:
             data=fetch_contracts()
             df=process_contracts(data)
+
+            col44, col45=st.columns(2)
+            with col44:
+                st.metric("Total Revenue", "9 mph", border=True)
+                plot_revenue_graph(df)
+                plot_pie_chart()
+                
+            with col45:
+                st.metric("Total Sales", "9 Sales", border=True)
+                plot_value_distribution()
+                plot_treemap()
+            
             st.dataframe(df)
 
 

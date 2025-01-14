@@ -33,7 +33,8 @@ def display_expring(df):
         st.info("No contracts are expiring in the next month.")
 
 
-
+def display_contracts(contract):
+    pass
 
 
 def help_page():
