@@ -31,7 +31,9 @@ def process_contracts(contracts: list):
             # "content": contract.get("content", ""),
             "date_uploaded": contract.get("date_uploaded", ""),
             "date_expiry": contract.get("date_expiry", ""),
-            "file_name": contract.get("file_name","")
+            "file_name": contract.get("file_name",""),
+            # "department": contract.get("department",""),
+            # "contract_type": contract.get("contract_type",""),
         }
         
         # Add dynamic extracted fields

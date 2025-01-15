@@ -8,6 +8,7 @@ import bson
 load_dotenv()
 import streamlit as st
 from extraction import extract_text_from_file
+from llm import call_llm
 def connect_to_db():
     try:
         MONGO_URI = os.getenv("MONGO_URI")
@@ -28,21 +29,27 @@ def close_mongodb_client(mongodb_client):
 
 def upload_contract(uploaded_file):
     pdf_data = uploaded_file.read()
+    content=extract_text_from_file(uploaded_file)
+    
     contract_data = {
-    "title": "Agreement04",
-    "content": extract_text_from_file(uploaded_file),
+    "title": "Agreement06",
+    "content": content,
     "date_uploaded": str(datetime.now().isoformat()), 
     "pdf_data": bson.Binary(pdf_data),  # Store as BSON Binary
     "file_name": uploaded_file.name,
     }
     
+    # out=call_llm(content)
+    
     extracted_fields={
-        "contract_value": 200,
-        "item_purchased": "Tische",
-        "unit_price": 60,
+        "contract_value": 500,
+        "item_purchased": "LEDs",
+        "unit_price": 20,
         "payment_terms": "Test",
         "penalties": "test",
         "delivery_schedule": "Monthly",
+        "contract_type": "Purchase Agreement",
+        "department": "Procurement",
     }
     
     mongodb_client, contracts_collection=connect_to_db()
@@ -55,7 +62,7 @@ def upload_contract(uploaded_file):
     close_mongodb_client(mongodb_client)
     st.cache_data.clear()
 
-@st.cache_data
+# @st.cache_data
 def fetch_contracts(query=None, projection=None):
     """
     Fetch contracts from the MongoDB collection.
@@ -96,3 +103,14 @@ def display_contracts(filename):
         return pdf_data
 
 
+def display_upload_button():
+    with st.sidebar:
+                
+                    st.header("Upload your contract file")
+                        # Create a file uploader in the second column
+                    uploaded_file = st.file_uploader("Choose a file")
+                        
+                        
+                        
+                    if uploaded_file:
+                        upload_contract(uploaded_file)

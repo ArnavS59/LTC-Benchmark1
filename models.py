@@ -4,13 +4,15 @@ from datetime import datetime, timedelta
 from typing import Optional
 
 class Output(BaseModel):
-    contract_value: float = Field(description="Vlaue of the contract")
-    item_purchased: str = Field(description="Items purchased")
-    unit_price: float = Field(description="Items purchased")
+    contract_value: float = Field(description="Value of the total contract")
+    item_purchased: str = Field(description="Unit items purchased")
+    unit_price: float = Field(description="Unit price of an item")
     payment_terms: str = Field(description="Payement terms")
     penalties: str = Field(description="Penalties")
     delivery_schedule : str = Field(description="Delivery schedule")
-    
+    contract_type: str = Field(description="Type of contract")
+    department: str = Field(description="Department")
+
     
 class Contract(BaseModel):
     title: str = Field(description="Title or name of the contract", max_length=255)

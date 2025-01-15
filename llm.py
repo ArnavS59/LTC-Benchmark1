@@ -1,10 +1,12 @@
 from models import Output
 from openai import OpenAI
+from PyPDF2 import PdfReader
+
 client = OpenAI()
 
 def call_llm(text):
     completion = client.beta.chat.completions.parse(
-        model="gpt-4o-2024-08-06",
+        model="gpt-4o-mini",
         messages=[
             {"role": "system", "content": "You are a legal assistant that extracts specific information from contracts."},
             {"role": "user", "content": f"This is the text: {text}"}, 

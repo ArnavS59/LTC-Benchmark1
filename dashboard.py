@@ -1,19 +1,22 @@
 import streamlit as st
-from extraction import process_contracts, extract_text_from_file
 import os
 from dotenv import load_dotenv
 load_dotenv()
-from llm import call_llm
 from utils import *
 USERNAME = os.environ['USERNAME']
 PASSWORD = os.environ['PASSWORD']
 from widgets import *
+from alerts import *
+from extraction import process_contracts
+from streamlit_card import card
+
 
 if 'authenticated' not in st.session_state:
         st.session_state['authenticated'] = False  # Initialize authentication status
         
 if st.session_state['authenticated']:
             st.set_page_config(page_title="LTC Venture Dashboard", layout="wide", initial_sidebar_state="collapsed")  # Collapse the sidebar initially)
+            
 else:
         st.set_page_config(page_title="LTC Venture Dashboard", layout="centered",     initial_sidebar_state="collapsed")  # Collapse the sidebar initially
 
@@ -40,28 +43,34 @@ def handle_login():
 
     
 def main():
-    st.title('LTC Venture Dashboard')
     
     if not st.session_state['authenticated']:
         handle_login()
     else:
-        
+        st.title('Risk Management Dashboard')   
+        display_upload_button()
         # col1 = st.columns(1)
-        
+        # data=fetch_contracts()
+        # df=process_contracts(data)
+        # df2=df.copy()
         # with col1:
             # data=fetch_contracts()
             # df=process_contracts(data)
 
         col44, col45=st.columns(2)
         with col44:
-                st.metric("Total Revenue", "€600k", border=True)
-                plot_revenue_graph()
-                plot_pie_chart()
+                # plot_revenue_graph()
+                # display_expring(df)
+                
+                display_potential_liability()
                 
         with col45:
-                st.metric("Contracts Signed this month", "12", border=True, delta="18")
-                plot_value_distribution()
-                plot_treemap()
+                display_alert()
+                # display_contracts_renew(df)
+                
+                # st.metric("Contracts Signed this month", "12", border=True, delta="18")
+                # plot_value_distribution()
+                # plot_treemap()
 
 
 

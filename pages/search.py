@@ -1,8 +1,8 @@
 import streamlit as st
-from utils import fetch_contracts, display_contracts
+from utils import fetch_contracts, display_contracts, display_upload_button
 import pandas as pd
 from streamlit_pdf_viewer import pdf_viewer
-
+import re
 # Check if the user is authenticated
 if 'authenticated' not in st.session_state:
     st.session_state['authenticated'] = False
@@ -52,9 +52,8 @@ def display_card(df):
                 card_html = f"""
                 <div class="card">
                     <h3>{row['file_name']}</h3>
-                    <p><strong>Contract Value:</strong> {row['contract_value']}</p>
-                    <p><strong>Item Purchased:</strong> {row['item_purchased']}</p>
-                    <p><strong>Unit Price:</strong> {row['unit_price']}</p>
+                    <p><strong>Department:</strong> {row['department']}</p>
+                    <p><strong>Contract Type:</strong> {row['contract_type']}</p>
                     <hr>
                     <p><strong>Date Uploaded:</strong> {row.get('date_uploaded', 'N/A')}</p>
                 </div>
@@ -86,6 +85,7 @@ def help_page():
     if not st.session_state['authenticated']:
         st.warning("Please log in to access this page.")
     else:
+        display_upload_button()
         st.title("Intelligent Search")
         col1, col2 = st.columns(2)
         
@@ -93,7 +93,9 @@ def help_page():
         with col1:
             user_input = st.text_area("Enter Keywords (separate with commas or spaces)", "")
             if user_input:
-                keywords = [word.strip() for word in user_input.replace(",", " ").split() if word.strip()]
+                # keywords = [word.strip() for word in user_input.replace(",", " ").split() if word.strip()]
+                keywords = [phrase.strip() for phrase in re.split(r'[,\n]+', user_input) if phrase.strip()]
+
             else:
                 keywords = []
 
@@ -113,29 +115,29 @@ def help_page():
                 user_input2 = st.text_area("Enter Filename", "")
                 if user_input2:
                     query_filter["file_name"] = {"$regex": user_input2, "$options": "i"}
-            with col13:
-                col111, coll23=st.columns(2)
-                with col111:
-                    options = ["Active", "Expired"]
-                    selection = st.pills("Status", options, selection_mode="single")
-                    current_date = pd.to_datetime("today")  # Get today's date
-                    if selection == "Active":
-                        query_filter["date_expiry"] = {"$gte": current_date.strftime("%Y-%m-%dT%H:%M:%S")}  # Expiration date >= today
-                    elif selection == "Expired":
-                        query_filter["date_expiry"] = {"$lt": current_date.strftime("%Y-%m-%dT%H:%M:%S")}
+            # with col13:
+            #     col111, coll23=st.columns(2)
+            #     with col111:
+            #         options = ["Active", "Expired"]
+            #         selection = st.pills("Status", options, selection_mode="single")
+            #         current_date = pd.to_datetime("today")  # Get today's date
+            #         if selection == "Active":
+            #             query_filter["date_expiry"] = {"$gte": current_date.strftime("%Y-%m-%dT%H:%M:%S")}  # Expiration date >= today
+            #         elif selection == "Expired":
+            #             query_filter["date_expiry"] = {"$lt": current_date.strftime("%Y-%m-%dT%H:%M:%S")}
                     
-                with coll23: 
-                    min_value, max_value = st.slider(
-                        "Select Contract Value Range",
-                        min_value=0, 
-                        max_value=1000,  # Adjust max value as needed
-                        value=(0, 1000),  # Default range
-                        step=100
-                    )
-                    query_filter["extracted_fields.contract_value"] = {
-                        "$gte": min_value,  # Greater than or equal to min_value
-                        "$lte": max_value   # Less than or equal to max_value
-                    }
+            #     with coll23: 
+            #         min_value, max_value = st.slider(
+            #             "Select Contract Value Range",
+            #             min_value=0, 
+            #             max_value=1000,  # Adjust max value as needed
+            #             value=(0, 1000),  # Default range
+            #             step=100
+            #         )
+            #         query_filter["extracted_fields.contract_value"] = {
+            #             "$gte": min_value,  # Greater than or equal to min_value
+            #             "$lte": max_value   # Less than or equal to max_value
+            #         }
                 
         
                 
