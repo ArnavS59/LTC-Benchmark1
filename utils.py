@@ -62,7 +62,7 @@ def upload_contract(uploaded_file):
     close_mongodb_client(mongodb_client)
     st.cache_data.clear()
 
-# @st.cache_data
+@st.cache_data
 def fetch_contracts(query=None, projection=None):
     """
     Fetch contracts from the MongoDB collection.
