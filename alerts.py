@@ -1,4 +1,4 @@
-import streamlit as st
+# import streamlit as st
 # from utils import display_contracts
 # from utils import *
 # import pandas as pd
@@ -8,8 +8,8 @@ import streamlit as st
 # from extraction import *
 from streamlit_card import card
 
-if "authenticated" not in st.session_state:
-    st.session_state["authenticated"] = False
+# if "authenticated" not in st.session_state:
+#     st.session_state["authenticated"] = False
 
 
 # def display_expring(df):

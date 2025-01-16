@@ -6,7 +6,7 @@ from utils import *
 USERNAME = os.environ['USERNAME']
 PASSWORD = os.environ['PASSWORD']
 # from widgets import *
-from alerts import *
+from alerts import display_opp, display_alert, display_potential_liability
 
 
 
@@ -58,9 +58,7 @@ def main():
 
         col44, col45, col123=st.columns(3)
         with col44:
-                # plot_revenue_graph()
-                # display_expring(df)
-                
+
             display_potential_liability()
                 
         with col45:
