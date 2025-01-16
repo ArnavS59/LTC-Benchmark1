@@ -161,7 +161,7 @@ def display_alert():
 
     res1 = card(
         title="Alert",
-        text=["Renewing Contract in 10 Days with a Volume of  $20,000.", "SaaS_Contract_Hubspot.pdf"],
+        text=["Renewing Contract in 10 Days with a Volume of  $20,000.", "SaaS_Contract_Hubspot.pdf" ,'"This Agreement shall automatically renew for successive year unless either party provides written notice of..."'],
         styles=styles,
         url="https://drive.google.com/file/d/1UBJiHDbc8nUQVzFlhPHYaH1mx1oAHUXO/view?usp=sharing"
     )
