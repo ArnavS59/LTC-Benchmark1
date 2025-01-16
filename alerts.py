@@ -97,12 +97,12 @@ def display_potential_liability():
     styles = {
         "card": {
             "width": "100%",  # Make the card take the full width of its container
-            "height": "auto",  # Height will adjust based on content
+            "height": "400px",  # Height will adjust based on content
             # "background-color": "#f8f9fa",  # Light background color
             "border-radius": "10px",  # Rounded corners
             "box-shadow": "0px 4px 6px rgba(0, 0, 0, 0.1)",  # Subtle shadow for 3D effect
-            "padding": "20px",  # Add some padding inside the card
-            # "text-align": "left",
+            "padding": "10px 10px",  # Add some padding inside the card
+            "text-align": "left", 
         },
         "title": {
             "background-color": "#FF9A3D",  # Light orange background
@@ -111,23 +111,20 @@ def display_potential_liability():
             "border-radius": "5px",  # Slightly rounded corners for the title area
             "font-size": "24px",  # Adjust title font size
             "font-weight": "bold",  # Make the title bold
-            "text-align": "left",
+            "text-align": "top",
+            "margin-bottom": "50px"
         },
         "text": {
             "font-size": "18px",  # Font size for the text
-            "color": "#555",  # Gray color for the text
-            "text-align": "left",  # Left-align the text
-        },
-        "line_break": {
-            "margin-top": "10px",  # Space between text and the line break
-            "margin-bottom": "10px",  # Space after line break
-            "border-top": "1px solid #ddd",  # Add a separator line
-        },
+            "color": "#8a8787",  # Gray color for the text
+            "text-align": "center",  # Left-align the text
+            "margin": "10px 10px 10px 10px", #
+        }
     }
 
     res = card(
         title="Potential Liability",
-        text=["Cost Adaptive Clause", "Purchase_Agreement_Supplier02.pdf", '"The prices set forth in this agreement...."'],
+        text=["Cost Adaptive Clause", "Purchase_Agreement_BSH_02.pdf", '"The prices set forth in this agreement...."'],
         styles=styles,
     )
     return
@@ -137,41 +134,78 @@ def display_alert():
     styles = {
         "card": {
             "width": "100%",  # Make the card take the full width of its container
-            "height": "auto",  # Height will adjust based on content
+            "height": "400px",  # Height will adjust based on content
             # "background-color": "#f8f9fa",  # Light background color
             "border-radius": "10px",  # Rounded corners
             "box-shadow": "0px 4px 6px rgba(0, 0, 0, 0.1)",  # Subtle shadow for 3D effect
-            "padding": "20px",  # Add some padding inside the card
-            # "text-align": "left",
+            "padding": "10px 10px",  # Add some padding inside the card
+            "text-align": "left", 
         },
         "title": {
-            "background-color": "#FF9A3D",  # Light orange background
+            "background-color": "#FF5733",  # Light orange background
             "color": "white",  # White text color
             "padding": "10px",  # Padding around the title
             "border-radius": "5px",  # Slightly rounded corners for the title area
             "font-size": "24px",  # Adjust title font size
             "font-weight": "bold",  # Make the title bold
-            "text-align": "left",
+            "text-align": "top",
+            "margin-bottom": "50px"
         },
         "text": {
             "font-size": "18px",  # Font size for the text
-            "color": "#555",  # Gray color for the text
-            "text-align": "left",  # Left-align the text
-        },
-        "line_break": {
-            "margin-top": "10px",  # Space between text and the line break
-            "margin-bottom": "10px",  # Space after line break
-            "border-top": "1px solid #ddd",  # Add a separator line
-        },
+            "color": "#8a8787",  # Gray color for the text
+            "text-align": "center",  # Left-align the text
+            "margin": "10px 10px 10px 10px", #
+        }
     }
 
     res1 = card(
         title="Alert",
-        text=["Cost Adaptive Clause", "Renewing Contract in 10 Days $20,000", "SaaS Contract_Hubspot.pdf"],
+        text=["Renewing Contract in 10 Days with a Volume of  $20,000.", "SaaS_Contract_Hubspot.pdf"],
         styles=styles,
         url="https://drive.google.com/file/d/1UBJiHDbc8nUQVzFlhPHYaH1mx1oAHUXO/view?usp=sharing"
     )
-    return
+
+
+
+def display_opp():
+    styles = {
+        "card": {
+            "width": "100%",  # Make the card take the full width of its container
+            "height": "400px",  # Height will adjust based on content
+            # "background-color": "#f8f9fa",  # Light background color
+            "border-radius": "10px",  # Rounded corners
+            "box-shadow": "0px 4px 6px rgba(0, 0, 0, 0.1)",  # Subtle shadow for 3D effect
+            "padding": "10px 10px",  # Add some padding inside the card
+            "text-align": "left", 
+        },
+        "title": {
+            "background-color": "green",  # Light orange background
+            "color": "white",  # White text color
+            "padding": "10px",  # Padding around the title
+            "border-radius": "5px",  # Slightly rounded corners for the title area
+            "font-size": "24px",  # Adjust title font size
+            "font-weight": "bold",  # Make the title bold
+            "text-align": "top",
+            "margin-bottom": "50px"
+        },
+        "text": {
+            "font-size": "18px",  # Font size for the text
+            "color": "#8a8787",  # Gray color for the text
+            "text-align": "center",  # Left-align the text
+            "margin": "10px 10px 10px 10px", #
+        }
+    }
+
+
+    res1 = card(
+        title="Opportunity",
+        text=["X"],
+        styles=styles,
+        url="https://drive.google.com/file/d/1UBJiHDbc8nUQVzFlhPHYaH1mx1oAHUXO/view?usp=sharing"
+    )
+
+
 
 
 # def help_page():

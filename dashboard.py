@@ -57,7 +57,7 @@ def main():
             # data=fetch_contracts()
             # df=process_contracts(data)
 
-        col44, col45=st.columns(2)
+        col44, col45, col123=st.columns(3)
         with col44:
                 # plot_revenue_graph()
                 # display_expring(df)
@@ -66,6 +66,9 @@ def main():
                 
         with col45:
                 display_alert()
+        
+        with col123:
+            display_opp()
                 # display_contracts_renew(df)
                 
                 # st.metric("Contracts Signed this month", "12", border=True, delta="18")
