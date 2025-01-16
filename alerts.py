@@ -1,10 +1,10 @@
 import streamlit as st
-from utils import display_contracts
+# from utils import display_contracts
 # from utils import *
 # import pandas as pd
 # from datetime import datetime, timedelta
 # import plotly.express as px
-from streamlit_pdf_viewer import pdf_viewer
+# from streamlit_pdf_viewer import pdf_viewer
 # from extraction import *
 from streamlit_card import card
 
@@ -165,6 +165,7 @@ def display_alert():
         styles=styles,
         url="https://drive.google.com/file/d/1UBJiHDbc8nUQVzFlhPHYaH1mx1oAHUXO/view?usp=sharing"
     )
+    return
 
 
 
@@ -202,8 +203,8 @@ def display_opp():
         title="Opportunity",
         text=["X"],
         styles=styles,
-        url="https://drive.google.com/file/d/1UBJiHDbc8nUQVzFlhPHYaH1mx1oAHUXO/view?usp=sharing"
     )
+    return
 
 
 

@@ -5,10 +5,9 @@ load_dotenv()
 from utils import *
 USERNAME = os.environ['USERNAME']
 PASSWORD = os.environ['PASSWORD']
-from widgets import *
+# from widgets import *
 from alerts import *
-from extraction import process_contracts
-from streamlit_card import card
+
 
 
 if 'authenticated' not in st.session_state:
@@ -62,10 +61,10 @@ def main():
                 # plot_revenue_graph()
                 # display_expring(df)
                 
-                display_potential_liability()
+            display_potential_liability()
                 
         with col45:
-                display_alert()
+            display_alert()
         
         with col123:
             display_opp()
