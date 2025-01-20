@@ -6,6 +6,9 @@ from alerts import display_opp, display_alert, display_potential_liability
 
 from utils import *
 
+if 'authenticated' not in st.session_state:
+    st.session_state['authenticated'] = False
+
 def main():
     
     if not st.session_state['authenticated']:
