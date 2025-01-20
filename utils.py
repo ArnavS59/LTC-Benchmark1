@@ -37,6 +37,8 @@ def upload_contract(uploaded_file):
     "date_uploaded": str(datetime.now().isoformat()), 
     "pdf_data": bson.Binary(pdf_data),  # Store as BSON Binary
     "file_name": uploaded_file.name,
+    "status": "draft", 
+    "contract_vendor": "Test GmbH"
     }
     
     # out=call_llm(content)
@@ -109,8 +111,49 @@ def display_upload_button():
                     st.header("Upload your contract file")
                         # Create a file uploader in the second column
                     uploaded_file = st.file_uploader("Choose a file")
-                        
+                    checkbox = st.checkbox("Enable AI Metadata Extraction ✨")
                         
                         
                     if uploaded_file:
                         upload_contract(uploaded_file)
+                    
+
+def displayexport():
+    st.markdown(
+                    """
+                    <style>
+                    .center-button {
+                        position: absolute;
+                        bottom: 0;
+                        width: 100%;
+                    }
+                    </style>
+                    """,
+                    unsafe_allow_html=True
+                )
+                
+                # Add the button inside the styled div
+    st.markdown('<div class="center-button">', unsafe_allow_html=True)
+    clicl=st.button("Generate Report")
+    st.markdown('</div>', unsafe_allow_html=True)
+    
+# def up_contracts(query=None, projection=None):
+#     """
+#     Fetch contracts from the MongoDB collection.
+    
+#     Args:
+#         query (dict): A MongoDB query to filter results (default is None, which fetches all documents).
+#         projection (dict): A MongoDB projection to specify fields to return (default is None, which returns all fields).
+    
+#     Returns:
+#         list: A list of documents matching the query.
+#     """
+#     if query is None:
+#         query = {}  # Default to fetching all documents
+    
+#     mongodb_client, contracts_collection=connect_to_db()
+#     result = contracts_collection.update_many(
+#     {},  # {} means all documents
+#     {'$set': {'contract_partner': 'Test GmbH'}}  # Add new field with value
+# )
+    

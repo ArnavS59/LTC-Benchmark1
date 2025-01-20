@@ -67,7 +67,7 @@ def db_page():
             # ]
         
         with COL5:
-            options = ["Active", "Expired"]
+            options = ["Sent Out", "Reviewed", "Draft", "Signed", "Expired"]
             selection = st.pills("Status", options, selection_mode="single")
             current_date = pd.to_datetime("today")  # Get today's date
             # if selection == "Active":
@@ -89,8 +89,14 @@ def db_page():
             if selected_contract_type:
                 filtered_df = filtered_df[filtered_df['contract_type'] == selected_contract_type]
 
-            if selection == "Active":
-                filtered_df = filtered_df[filtered_df['date_expiry'] >= current_date]
+            if selection == "Reviewed":
+                filtered_df = filtered_df[filtered_df['status'] == "reviewed"]
+            elif selection == "Sent Out":
+                    filtered_df = filtered_df[filtered_df['status'] == "sent out"]
+            elif selection == "Draft":
+                    filtered_df = filtered_df[filtered_df['status'] == "draft"]
+            elif selection == "Signed":
+                    filtered_df = filtered_df[filtered_df['status'] == "signed"]
             elif selection == "Expired":
                 filtered_df = filtered_df[filtered_df['date_expiry'] < current_date]
             

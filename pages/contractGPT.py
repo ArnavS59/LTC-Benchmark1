@@ -3,6 +3,23 @@ if 'authenticated' not in st.session_state:
     st.session_state['authenticated'] = False
 import time
     
+from utils import *
+    
+def display_share():
+    with st.sidebar:
+        st.title("Share Legalbot")
+
+        # Input for inviting users (email field)
+        invite_email = st.text_input("Invite users", placeholder="Email address")
+
+        # Invite button
+        if st.button("Invite"):
+            if invite_email:
+                st.write(f"Invitation sent to {invite_email}")
+            else:
+                st.warning("Please enter an email address.")
+        
+    
 def response_generator():
     response = """
 **1. Ownership of Intellectual Property**
@@ -33,8 +50,13 @@ def chatbot():
     if not st.session_state['authenticated']:
         st.warning("Please log in to access this page.")
     else:
-        
+        col1, col2=st.columns([6,1])
+        # with col1:
         st.title("ContractGPT Chatbot")
+        # with col2:
+        #     displayexport()
+        
+        
         if "messages" not in st.session_state:
             st.session_state.messages = []
 
@@ -54,3 +76,4 @@ def chatbot():
             st.session_state.messages.append({"role": "assistant", "content": assistant_response})
     
 chatbot()
+display_share()

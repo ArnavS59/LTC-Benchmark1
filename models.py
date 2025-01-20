@@ -1,7 +1,7 @@
 
 from pydantic import BaseModel, Field
 from datetime import datetime, timedelta
-from typing import Optional
+from typing import Optional, Literal
 
 class Output(BaseModel):
     contract_value: float = Field(description="Value of the total contract")
@@ -24,3 +24,5 @@ class Contract(BaseModel):
     )
     pdf_data: Optional[bytes] = Field(default=None, description="Data of pdf")
     file_name: str = Field(default=None, description="File name of the contract")
+    status: Literal[ "draft", "send out","reviewed", "signed"]
+    contract_partner: str = Field(default=None, description="Vendor of the contract")

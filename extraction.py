@@ -32,6 +32,8 @@ def process_contracts(contracts: list):
             "date_uploaded": contract.get("date_uploaded", ""),
             "date_expiry": contract.get("date_expiry", ""),
             "file_name": contract.get("file_name",""),
+            "status": contract.get("status",""),
+            "contract_partner": contract.get("contract_partner","")
             # "department": contract.get("department",""),
             # "contract_type": contract.get("contract_type",""),
         }

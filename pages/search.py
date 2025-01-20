@@ -1,5 +1,5 @@
 import streamlit as st
-from utils import fetch_contracts, display_contracts, display_upload_button
+from utils import fetch_contracts, display_contracts, display_upload_button, displayexport
 import pandas as pd
 from streamlit_pdf_viewer import pdf_viewer
 import re
@@ -67,6 +67,26 @@ def display_card(df):
                 # # st.write(f"**Content (Snippet)**: ... {relevant_content}...")
                 # st.write(f"---")
                 # st.write(f"**Date Uploaded**: {row.get('date_uploaded', 'N/A')}")
+                toggle_key2 = f"toggle2-pdf-{n_row}"
+                if toggle_key2 not in st.session_state:
+                    st.session_state[toggle_key2] = False 
+
+                toggle_button2 = st.button(f"Show Prev Versions {n_row}", key=f"toggle2-button-{n_row}")
+                if toggle_button2:
+                    st.session_state[toggle_key2] = not st.session_state[toggle_key2]  # Toggle state
+
+                if st.session_state[toggle_key2]:
+                    data = {
+                        'Contract': ['KaufVertrag LED', 'KaufVertrag LED', 'KaufVertrag LED'],
+                        'Vendor': ['BSH', 'BSH', 'BSH' ],
+                        'Status': ['Reviewed', 'Sent out', 'Draft'],
+                        'Date': ['20.12.24', '06.12.24', '23.11.24']
+                    }
+                    df = pd.DataFrame(data)
+                    st.dataframe(df)
+                    
+                    
+
                 toggle_key = f"toggle-pdf-{n_row}"
 
                 if toggle_key not in st.session_state:
@@ -79,6 +99,11 @@ def display_card(df):
                 if st.session_state[toggle_key]:
                     output=display_contracts(row['file_name'])
                     pdf_viewer(output, key=f"pdf-viewer-{n_row}")
+                
+                    
+
+                    
+                
     return
 
 def help_page():
@@ -86,7 +111,12 @@ def help_page():
         st.warning("Please log in to access this page.")
     else:
         display_upload_button()
-        st.title("Intelligent Search")
+        col01, col02 = st.columns([6,1])
+        with col01:
+            st.title("Intelligent Search")
+        with col02:
+            displayexport()
+            
         col1, col2 = st.columns(2)
         
         query_filter = {}
