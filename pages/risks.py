@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime, timedelta
 import plotly.express as px
-from alerts import *
+from alerts import cardliab, cardopp, cardalert
 
 from utils import *
 
