@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime, timedelta
 import plotly.express as px
-from alerts import display_opp, display_alert, display_potential_liability
+from alerts import *
 
 from utils import *
 
@@ -27,13 +27,16 @@ def main():
         col44, col45, col123=st.columns(3)
         with col44:
 
-            display_potential_liability()
+            # display_potential_liability()
+            cardliab()
                 
         with col45:
-            display_alert()
+            cardalert()
+            # display_alert()
         
         with col123:
-            display_opp()
+            # display_opp()
+            cardopp()
                 # display_contracts_renew(df)
                 
                 # st.metric("Contracts Signed this month", "12", border=True, delta="18")

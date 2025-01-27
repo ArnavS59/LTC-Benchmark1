@@ -21,6 +21,12 @@ def db_page():
         data=fetch_contracts()
         df=process_contracts(data)
         df['date_expiry'] = pd.to_datetime(df['date_expiry'])
+        df["Vertragsstrafe-Klausel"]="Für jeden Tag der Lieferverzögerung wird eine Vertragsstrafe in Höhe von 1 % des Vertragswerts fällig."
+        df["Leistungsanreiz- und Sanktionsklausel"]="Bei Nichteinhaltung des Liefertermins behält sich der Käufer das Recht vor, den Vertragspreis um €1000 zu mindern oder die Vertragsbedingungen neu zu verhandeln."
+        df["Klausel zur wesentlichen Vertragsverletzung und Neuverhandlung"]="Im Falle eines Verstoßes gegen wesentliche Vertragsbedingungen, wie einer Verzögerung von mehr als 10 Tagen, kann der Käufer den Preis neu verhandeln."
+
+
+        
         with COL2:
             selected_department = st.selectbox(
                 "Select Department",
@@ -105,4 +111,8 @@ def db_page():
 
 
 if __name__ == "__main__":
-        db_page()
+        db_page() 
+        
+        
+        
+        

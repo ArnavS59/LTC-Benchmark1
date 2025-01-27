@@ -12,87 +12,6 @@ from streamlit_card import card
 #     st.session_state["authenticated"] = False
 
 
-# def display_expring(df):
-#     df["date_expiry"] = pd.to_datetime(df["date_expiry"])
-
-#     # Get today's date and date one month from today
-#     today = datetime.now()
-#     next_month = today + timedelta(days=30)
-
-#     # Filter contracts expiring in the next month
-#     expiring_soon = df[(df["date_expiry"] >= today) & (df["date_expiry"] <= next_month)]
-#     expiring_soon["date_expiry_numeric"] = (
-#         pd.to_datetime(expiring_soon["date_expiry"]).astype(int) / 10**9
-#     )  # Convert to seconds
-
-#     # Visualization with Plotly
-#     if not expiring_soon.empty:
-#         fig = px.scatter(
-#             expiring_soon,
-#             x="date_expiry",
-#             y="title",  # Assuming there's a 'contract_name' column for labels
-#             title=f"{len(expiring_soon)} Contracts Expiring in the Next Month",
-#             color="date_expiry_numeric",
-#             color_continuous_scale="RdBu",  # Red for soon, blue for later,
-#             text=expiring_soon["date_expiry"].dt.strftime("%Y-%m-%d"),
-#         )
-#         fig.update_traces(
-#             marker=dict(size=12),  # Increase dot size
-#             textposition="bottom center",  # Position labels below dots
-#         )
-
-#         fig.update_layout(
-#             xaxis_title="Expiry Date", yaxis_title=None, coloraxis_showscale=False
-#         )
-#         st.plotly_chart(fig)
-#     else:
-#         st.info("No contracts are expiring in the next month.")
-
-
-# def display_contracts_renew(df):
-
-#     today = datetime.now()
-#     next_month = today + timedelta(days=30)
-#     # df['date_expiry'] = pd.to_datetime(df['date_expiry'])
-#     # expiring_soon = df[(df['date_expiry'] >= today) & (df['date_expiry'] <= next_month)]
-#     # today = datetime.now()
-#     # next_month = today + timedelta(days=30)
-
-#     # Filter contracts expiring in the next month
-#     expiring_soon = df[(df["date_expiry"] >= today) & (df["date_expiry"] <= next_month)]
-
-#     total_cost = expiring_soon["contract_value"].sum()
-
-#     expiring_soon["category"] = ""
-#     if not expiring_soon.empty:
-#         fig = px.bar(
-#             expiring_soon,
-#             x="category",  # Contract names
-#             y="contract_value",  # Cost to be paid for renewal
-#             color="contract_value",  # Color bars based on cost
-#             color_continuous_scale="Viridis",  # Color scale
-#             title=f"{len(expiring_soon)} Contracts Auto-Renewing in the Next Month with total cost of €{total_cost}",
-#             hover_data={
-#                 "title": True,
-#                 "contract_value": True,
-#             },  # Show contract title and cost on hover
-#         )
-
-#         # Customize chart layout
-#         fig.update_layout(
-#             barmode="stack",
-#             xaxis_title="Contracts",
-#             yaxis_title="Value (€)",
-#             coloraxis_colorbar_title="Cost",
-#         )
-
-#         # Display the chart
-#         st.plotly_chart(fig)
-
-#     else:
-#         st.write("No contracts expiring in the next month.")
-
-
 def display_potential_liability():
     styles = {
         "card": {
@@ -201,7 +120,7 @@ def display_opp():
 
     res1 = card(
         title="Opportunity",
-        text=["X"],
+        text=["Mengenrabatt-Klausel","Purchase_Agreement_BSH_02.pdf",'"If the Purchaser buys 200 units of X in a single order, a discount of 50% on the total purchase value of the 500 units will apply."'],
         styles=styles,
     )
     return
@@ -222,3 +141,383 @@ def display_opp():
 
 # if __name__ == "__main__":
 #         help_page()
+import streamlit as st
+
+# Define your HTML content
+
+def cardliab():
+    html_code = """
+   <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alert Card</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: transparent;
+            color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 100px;
+
+        }
+        .body:hover {
+        transform: scale(1.05);
+        }
+        
+        /* Base Card Styles (Dark Mode by default) */
+        .card {
+            width: 24rem;
+            border: 1px solid #555;
+            border-radius: 16px;
+            background-color: #333;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+            padding: 1.5rem;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            height: 210px;
+
+        }
+        .card:hover {
+        background-color:  #383838; /* Replace with your desired hover color */
+         
+}
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .card-header h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #f1f1f1;
+            margin: 0;
+        }
+        .card-header .icon {
+            color: #ff5722;
+            margin-right: 0.5rem;
+            font-size: 1.5rem;
+        }
+        .card-content {
+            margin-bottom: 1rem;
+        }
+        .card-content p {
+            font-size: 0.9rem;
+            color: #bbb;
+            margin: 0 0 0.5rem;
+        }
+        .file {
+            background-color: #444;
+            padding: 0.5rem;
+            border-radius: 8px;
+            color: #fff;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+        blockquote {
+            font-size: 0.9rem;
+            color: #ddd;
+            font-style: italic;
+            border-left: 4px solid #555;
+            padding-left: 0.5rem;
+            margin: 0;
+        }
+        .card-footer {
+            text-align: right;
+        }
+        .button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .button:hover {
+            background-color: #0056b3;
+            color: #fff;
+        }
+        .icon, .text {
+        display: inline-block; /* Makes both elements align horizontally */
+        margin-right: 10px; /* Adds space between them */
+}
+
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="card-header">
+       <h2 class="icon">⚠️</h2>
+        <h2 class="text">Potential Liability</h2>
+
+        </div>
+        <div class="card-content">
+            <p>Cost Adaptive Clause</p>
+            <div class="file">Purchase_Agreement_BSH_02.pdf</div>
+            <blockquote>"The prices set forth in this agreement are subject to adjustment based on changes in the cost of materials, labor, or other..."</blockquote>
+        </div>
+        <div class="card-footer">
+            <a class="button">View Details</a>
+        </div>
+    </div>
+</body>
+</html>
+
+    """
+
+    # Use Streamlit to display the HTML
+    return st.components.v1.html(html_code, height=500, scrolling=True)
+
+
+
+def cardalert():
+    html_code = """
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alert Card</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: transparent;
+            color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 100px;
+
+        }
+        .body:hover {
+        transform: scale(1.05);
+        }
+        
+        /* Base Card Styles (Dark Mode by default) */
+        .card {
+            width: 24rem;
+            border: 1px solid #555;
+            border-radius: 16px;
+            background-color: #333;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+            padding: 1.5rem;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            height: 210px;
+        }
+        .card:hover {
+        background-color:  #383838; /* Replace with your desired hover color */
+         
+}
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .card-header h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #f1f1f1;
+            margin: 0;
+        }
+        .card-header .icon {
+            color: #ff5722;
+            margin-right: 0.5rem;
+            font-size: 1.5rem;
+        }
+        .card-content {
+            margin-bottom: 1rem;
+        }
+        .card-content p {
+            font-size: 0.9rem;
+            color: #bbb;
+            margin: 0 0 0.5rem;
+        }
+        .file {
+            background-color: #444;
+            padding: 0.5rem;
+            border-radius: 8px;
+            color: #fff;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+        blockquote {
+            font-size: 0.9rem;
+            color: #ddd;
+            font-style: italic;
+            border-left: 4px solid #555;
+            padding-left: 0.5rem;
+            margin: 0;
+        }
+        .card-footer {
+            text-align: right;
+        }
+        .button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .button:hover {
+            background-color: #0056b3;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="card-header">
+            <span class="icon">&#9888;</span>
+            <h2>Alert</h2>
+        </div>
+        <div class="card-content">
+            <p>Renewing Contract in 10 Days with a Volume of  $20,000.</p>
+            <div class="file">SaaS_Contract_Hubspot.pdf</div>
+            <blockquote>"This Agreement shall automatically renew for successive year unless either party provides written notice of..."</blockquote>
+        </div>
+        <div class="card-footer">
+            <a href="https://drive.google.com/file/d/1UBJiHDbc8nUQVzFlhPHYaH1mx1oAHUXO/view?usp=sharing" target="_blank" class="button">View Details</a>
+        </div>
+    </div>
+</body>
+</html>
+    """
+
+    # Use Streamlit to display the HTML
+    return st.components.v1.html(html_code, height=500, scrolling=True)
+
+
+
+
+def cardopp():
+    html_code = """
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alert Card</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: transparent;
+            color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 100px;
+        }
+        .body:hover {
+        transform: scale(1.05);
+        }
+        
+        /* Base Card Styles (Dark Mode by default) */
+        .card {
+            width: 24rem;
+            border: 1px solid #555;
+            border-radius: 16px;
+            background-color: #333;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+            padding: 1.5rem;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            height: 210px;
+        }
+        .card:hover {
+        background-color:  #383838; /* Replace with your desired hover color */
+         
+}
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .card-header h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #f1f1f1;
+            margin: 0;
+        }
+        .card-header .icon {
+            color: #ff5722;
+            margin-right: 0.5rem;
+            font-size: 1.5rem;
+        }
+        .card-content {
+            margin-bottom: 1rem;
+        }
+        .card-content p {
+            font-size: 0.9rem;
+            color: #bbb;
+            margin: 0 0 0.5rem;
+        }
+        .file {
+            background-color: #444;
+            padding: 0.5rem;
+            border-radius: 8px;
+            color: #fff;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+        blockquote {
+            font-size: 0.9rem;
+            color: #ddd;
+            font-style: italic;
+            border-left: 4px solid #555;
+            padding-left: 0.5rem;
+            margin: 0;
+        }
+        .card-footer {
+            text-align: right;
+        }
+        .button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .button:hover {
+            background-color: #0056b3;
+            color: #fff;
+        }
+        .icon, .text {
+  display: inline-block; /* Makes both elements align horizontally */
+  margin-right: 10px; /* Adds space between them */
+}
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="card-header">
+        <h2 class="icon">🎯</h2>
+        <h2 class="text">Opportunity</h2>
+        </div>
+        <div class="card-content">
+            <p>Mengenrabatt-Klausel</p>
+            <div class="file">Purchase_Agreement_BSH_02.pdf</div>
+            <blockquote>"If the Purchaser buys 200 units of X in a single order, a discount of 50% on the total purchase value of the 500 units will apply."</blockquote>
+        </div>
+        <div class="card-footer">
+            <a class="button">View Details</a>
+        </div>
+    </div>
+</body>
+</html>
+
+    """
+
+    # Use Streamlit to display the HTML
+    return st.components.v1.html(html_code, height=500, scrolling=True)
