@@ -24,19 +24,19 @@ def main():
             # data=fetch_contracts()
             # df=process_contracts(data)
 
-        col44, col45, col123=st.columns(3)
-        with col44:
+        # col44, col45, col123=st.columns(3)
+        # with col44:
 
-            # display_potential_liability()
-            cardliab()
+        #     # display_potential_liability()
+        #     cardliab()
                 
-        with col45:
-            cardalert()
+        # with col45:
+        #     cardalert()
             # display_alert()
         
-        with col123:
+        # with col123:
             # display_opp()
-            cardopp()
+        cardopp()
                 # display_contracts_renew(df)
                 
                 # st.metric("Contracts Signed this month", "12", border=True, delta="18")
