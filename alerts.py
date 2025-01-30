@@ -513,7 +513,7 @@ def cardopp():
         <div class="card-content">
             <p>Renewing Contract in 10 Days with a Volume of $20,000.</p>
             <div class="file">SaaS_Contract_Hubspot.pdf</div>
-            <blockquote>"This Agreement shall automatically renew for successive year unless either party provides written notice of..."</blockquote>
+            <blockquote>"This Agreement shall automatically renew for successive year unless either party provides written notice of the agreement ... "</blockquote>
         </div>
         <div class="card-footer">
             <a href="#" class="button">View Details</a>
@@ -544,7 +544,7 @@ def cardopp():
         <div class="card-content">
             <p>Cost Adaptive Clause</p>
             <div class="file">Purchase_Agreement_BSH_02.pdf</div>
-            <blockquote>"The prices set forth in this agreement are subject to adjustment based on changes in the cost of materials, labor, or other..."</blockquote>
+            <blockquote>"The prices set forth in this agreement are subject to adjustment based on changes in the cost of materials, labor, or other ..."</blockquote>
         </div>
         <div class="card-footer">
             <a class="button">View Details</a>
