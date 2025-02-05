@@ -79,7 +79,7 @@ def plot_pie_chart():
         df,
         names="Contract Category",
         values="Contract Volume",
-        title="Contract Volume by Category",
+        title="Contract Volume by Expense Category",
         hole=0.3
     )
     st.plotly_chart(fig)
@@ -179,7 +179,7 @@ def display_contracts_renew(df):
             y="contract_value",  # Cost to be paid for renewal
             color="contract_value",  # Color bars based on cost
             color_continuous_scale="Viridis",  # Color scale
-            title=f"{len(expiring_soon)} Contracts Auto-Renewing in the Next Month with total cost of €{total_cost}",
+            title=f"{len(expiring_soon)} Contracts Auto-Renewing in the Next Month",
             hover_data={
                 "title": True,
                 "contract_value": True,
@@ -217,7 +217,7 @@ def main():
 
         col44, col45, col11=st.columns(3)
         with col44:
-                st.metric("Total Revenue", "€600k", border=True)
+                st.metric("Prevent Costs", "€200k", border=True)
 
                 
         with col45:
