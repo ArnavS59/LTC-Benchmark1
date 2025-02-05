@@ -211,7 +211,7 @@ def main():
         df=process_contracts(data)
         col1, col2=st.columns([6,1])
         with col1:
-            st.title('LTC Accountability Dashboard')
+            st.title('Performance Metrics')
         with col2:
             displayexport()
 
