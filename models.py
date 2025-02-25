@@ -25,4 +25,4 @@ class Contract(BaseModel):
     pdf_data: Optional[bytes] = Field(default=None, description="Data of pdf")
     file_name: str = Field(default=None, description="File name of the contract")
     status: Literal[ "draft", "send out","reviewed", "signed"]
-    contract_partner: str = Field(default=None, description="Vendor of the contract")
+    contract_partner: str = Field(default="BSH", description="Vendor of the contract")

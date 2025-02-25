@@ -32,7 +32,7 @@ def upload_contract(uploaded_file):
     content=extract_text_from_file(uploaded_file)
     
     contract_data = {
-    "title": "Agreement06",
+    "title": "Agreement08",
     "content": content,
     "date_uploaded": str(datetime.now().isoformat()), 
     "pdf_data": bson.Binary(pdf_data),  # Store as BSON Binary
